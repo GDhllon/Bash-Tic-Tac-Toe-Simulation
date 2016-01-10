@@ -55,13 +55,13 @@ winCheck(){
 		
 	for ((i=1;i<=num_rows;i++)) do
 		if [ ${matrix[$i,1]} -eq "$turn" ] && [ ${matrix[$i,2]} -eq "$turn" ] && [ ${matrix[$i,3]} -eq "$turn" ]; then
-				WIN=1
-				if [ "$turn" -eq 1 ]; then
-					printf "Congratulations human, you have won.\n"
-				else
-					printf "Better luck next time, human.\n"
-				fi
-				return
+			WIN=1
+			if [ "$turn" -eq 1 ]; then
+				printf "Congratulations human, you have won.\n"
+			else
+				printf "Better luck next time, human.\n"
+			fi
+			return
 		fi
 
 	done
@@ -69,13 +69,13 @@ winCheck(){
 	#check columns
 	for ((i=1;i<=num_columns;i++)) do
 		if [ ${matrix[1,$i]} -eq "$turn" ] && [ ${matrix[2,$i]} -eq "$turn" ] && [ ${matrix[3,$i]} -eq "$turn" ]; then
-				WIN=1
-				if [ "$turn" -eq 1 ]; then
-					printf "Congratulations human, you have won.\n"
-				else
-					printf "Better luck next time, human.\n"
-				fi
-				return
+			WIN=1
+			if [ "$turn" -eq 1 ]; then
+				printf "Congratulations human, you have won.\n"
+			else
+				printf "Better luck next time, human.\n"
+			fi
+			return
 		fi
 
 	done
@@ -142,23 +142,23 @@ drawBoard
 
 #main game loop
 while [  $WIN = 0 ]; do
-		printf "Your move human. Enter your space as row column e.g. 1 1\n"
-		read X Y
-		sanityCheck
-		if [ "$check" -eq 1 ]; then
+	printf "Your move human. Enter your space as row column e.g. 1 1\n"
+	read X Y
+	sanityCheck
+	if [ "$check" -eq 1 ]; then
+		winCheck
+		drawBoard
+		if [ $WIN = 0 ]; then
+			printf "Hmmm....\n"
+			sleep 2
+			opponentTurn
 			winCheck
+			turn=1
 			drawBoard
-			if [ $WIN = 0 ]; then
-				printf "Hmmm....\n"
-				sleep 2
-				opponentTurn
-				winCheck
-				turn=1
-				drawBoard
-			fi
-		else
-			printf "Try again, human.\n"
 		fi
-		check=0
+	else
+		printf "Try again, human.\n"
+	fi
+	check=0
 		
 done
